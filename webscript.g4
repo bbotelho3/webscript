@@ -17,11 +17,12 @@ statement
 	;
 
 variable
-	: "var" identifier ";"
+	: 'var' Identifier ';'
 	;
 
-identifier
+Identifier
 	: IdentifierStart IdentifierPart*
+	;
 
 fragment IdentifierStart
 	: [A-Za-z]
