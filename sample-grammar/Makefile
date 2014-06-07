@@ -1,7 +1,7 @@
 all: antlr4 javac
 
 antlr4:
-	antlr4 webscript.g4
+	antlr4 ECMAScript.g4
 
 javac:
 	javac *.java
