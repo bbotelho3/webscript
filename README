@@ -1,0 +1,19 @@
+#
+# README FILE
+#
+
+# Directory tree
+
+docs -> Documentation directory.
+
+js -> JavaScript examples direcory.
+
+Makefile -> Makefile to webscript.
+
+README -> This file.
+
+run -> Script to test an example.
+
+sample-grammar -> Example grammar.
+
+webscript.g4 -> Webscript grammar.
