@@ -1,0 +1,5 @@
+dwddwdwqoijidoq;
+
+function(): {
+
+}
