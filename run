@@ -1,3 +1,5 @@
 #!/bin/bash
 
-`grun ECMAScript program $1`
+GRUN="java org.antlr.v4.runtime.misc.TestRig"
+
+$GRUN webscript program $1
