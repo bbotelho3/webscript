@@ -2,4 +2,11 @@
 
 GRUN="java org.antlr.v4.runtime.misc.TestRig"
 
-$GRUN webscript program $1
+if [ ! -d "output" ]; then
+  echo "Not 'output' directory"
+  exit -1
+fi
+
+cd output
+
+$GRUN webscript program ../$1
