@@ -42,11 +42,12 @@ statement
 	;
 
 ifStatement
-	: 'if' '(' expression ')' Space '{' elements? '}'
+	: If '(' expression ')' Space '{' elements? '}'
 	;
 
 iteration
-	:
+	: While '(' expression ')' Space '{' elements? '}'
+	| Do elements While '(' expression ')' ';'
 	;
 
 breakStatement
@@ -151,9 +152,19 @@ LineEnd
 	: [\r\n]
 	;
 
-Var   : 'var';
-Do    : 'do';
-While : 'while';
+LessThan		: '<';
+GraterThan		: '>';
+LessThanEquals		: '<=';
+GraterThanEquals	: '>=';
+Equals			: '==';
+Plus			: '+';
+Minus			: '-';
+Multiply		: '*';
+Divide			: '/';
+If			: 'if';
+Var			: 'var';
+Do			: 'do';
+While			: 'while';
 
 Identifier
 	: IdentifierStart IdentifierPart*
