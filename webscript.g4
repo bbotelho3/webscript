@@ -15,12 +15,14 @@ element
 	| functionDeclaration EOF
 	;
 
+Var : 'var';
+
 functionDeclaration
 	: 'function' Space Identifier '(' functionParameterList? ')' Space '{' functionBody '}'
 	;
 
 functionParameterList
-	:
+	: Identifier ( ',' Identifier )*
 	;
 
 functionBody
@@ -28,7 +30,7 @@ functionBody
 	;
 
 statement
-	: variable
+	: variableDeclaration
 	| empty
 	| ifStatement
 	| iteration
@@ -83,8 +85,8 @@ empty
 	;
 
 /// Declaração de variável.
-variable
-	: 'var' Space Identifier initialiser? ';'
+variableDeclaration
+	: Var Space Identifier initialiser? ';'
 	;
 
 /// Inicialização de variável.

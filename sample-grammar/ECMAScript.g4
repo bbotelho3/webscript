@@ -850,24 +850,6 @@ DecimalLiteral
  | DecimalIntegerLiteral ExponentPart?
  ;
 
-fragment DecimalDigit
- : [0-9]
- ;
-
-fragment HexDigit
- : [0-9a-fA-F]
- ;
-
-fragment OctalDigit
- : [0-7]
- ;
-
-fragment DecimalIntegerLiteral
- : '0'
- | [1-9] DecimalDigit*
- ;
-
-
 /// 7.8.3 Numeric Literals
 HexIntegerLiteral
  : '0' [xX] HexDigit+
