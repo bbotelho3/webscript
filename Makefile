@@ -7,5 +7,6 @@ javac:
 	javac output/*.java
 
 clean:
-	rm -f *.java
-	rm -f *.class
+	rm -f output/*.java
+	rm -f output/*.class
+	rm -f output/*.tokens
