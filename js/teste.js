@@ -4,8 +4,8 @@ var c;
 var b = "teste893932928 dqodioqw";
 
 function a(a,b,c) {
-var a;
-
+    var a;
+    var b;
 }
 
 if(a + b) {

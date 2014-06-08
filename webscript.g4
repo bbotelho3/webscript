@@ -1,5 +1,29 @@
 grammar webscript;
 
+tokens { INDENT, DEDENT }
+
+@lexer::header {
+  import com.yuvalshavit.antlr4.DenterHelper;
+}
+
+
+@lexer::members {
+  private final DenterHelper denter = new DenterHelper(LineEnd,
+                                                       webscriptParser.INDENT,
+                                                       webscriptParser.DEDENT)
+  {
+    @Override
+    public Token pullToken() {
+      return webscriptLexer.super.nextToken();
+    }
+  };
+
+  @Override
+  public Token nextToken() {
+    return denter.nextToken();
+  }
+}
+
 program
 	: elements? EOF
 	;
@@ -16,7 +40,7 @@ element
 	;
 
 functionDeclaration
-	: 'function' Space Identifier '(' functionParameterList? ')' Space '{' functionBody '}'
+	: 'function' Space Identifier '(' functionParameterList? ')' Space '{' INDENT functionBody DEDENT '}'
 	;
 
 functionParameterList
@@ -148,7 +172,7 @@ Space
 	;
 
 LineEnd
-	: [\r\n]
+	: ('\r'? '\n' ' '*)
 	;
 
 Var   : 'var';

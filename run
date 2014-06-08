@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GRUN="java org.antlr.v4.runtime.misc.TestRig"
+GRUN="java -classpath ../lib/antlr-denter-1.2-SNAPSHOT.jar:/usr/local/Cellar/antlr/4.2/antlr-4.2-complete.jar:. org.antlr.v4.runtime.misc.TestRig"
 
 if [ ! -d "output" ]; then
   echo "Not 'output' directory"
