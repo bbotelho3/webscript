@@ -15,8 +15,6 @@ element
 	| functionDeclaration EOF
 	;
 
-Var : 'var';
-
 functionDeclaration
 	: 'function' Space Identifier '(' functionParameterList? ')' Space '{' functionBody '}'
 	;
@@ -104,8 +102,22 @@ literal
 	| String
 	;
 
+Decimal
+	: '0' '.' DecimalDigit*
+	| '.' DecimalDigit+
+	| [1-9] DecimalDigit*
+	;
+
+fragment DecimalDigit
+	: [0-9]
+	;
+
 String
 	: '"' StringCharacter* '"'
+	;
+
+fragment StringCharacter
+	: [A-Za-z0-9 ]
 	;
 
 Space
@@ -116,19 +128,9 @@ LineEnd
 	: [\r\n]
 	;
 
-fragment StringCharacter
-	: [A-Za-z0-9 ]
-	;
-
-Decimal
-	: '0' '.' DecimalDigit*
-	| '.' DecimalDigit+
-	| [1-9] DecimalDigit*
-	;
-
-fragment DecimalDigit
-	: [0-9]
-	;
+Var   : 'var';
+Do    : 'do';
+While : 'while';
 
 Identifier
 	: IdentifierStart IdentifierPart*
