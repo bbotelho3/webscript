@@ -15,10 +15,12 @@ element
 	| functionDeclaration EOF
 	;
 
+/// Declaração de função
 functionDeclaration
 	: 'function' Space Identifier '(' functionParameterList? ')' Space '{' functionBody '}'
 	;
 
+/// Declaração dos parâmetros da função.
 functionParameterList
 	: Identifier ( ',' Identifier )*
 	;
@@ -41,10 +43,12 @@ statement
 	| debuggerStatement
 	;
 
+/// Declaração do if.
 ifStatement
 	: If '(' expression ')' Space '{' elements? '}'
 	;
 
+/// Declaração dos comantos iteração.
 iteration
 	: While '(' expression ')' Space '{' elements? '}'
 	| Do elements While '(' expression ')' ';'
@@ -144,14 +148,17 @@ fragment StringCharacter
 	: [A-Za-z0-9 ]
 	;
 
+/// Espaço em branco.
 Space
 	: ' '
 	;
 
+/// Final de linha.
 LineEnd
 	: [\r\n]
 	;
 
+/// Tokens.
 LessThan		: '<';
 GraterThan		: '>';
 LessThanEquals		: '<=';
@@ -166,6 +173,7 @@ Var			: 'var';
 Do			: 'do';
 While			: 'while';
 
+/// Identificadores.
 Identifier
 	: IdentifierStart IdentifierPart*
 	;
