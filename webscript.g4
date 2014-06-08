@@ -42,7 +42,7 @@ statement
 	;
 
 ifStatement
-	:
+	: 'if' '(' expression ')' Space '{' statement '}'
 	;
 
 iteration
@@ -58,7 +58,7 @@ continueStatement
 	;
 
 returnStatement
-	:
+	: 'return' Space expression ';'
 	;
 
 switchStatement
@@ -92,8 +92,31 @@ initialiser
 	: Space '=' Space expression
 	;
 
+/* Declaração de uma expressão.
+ *
+ * Menor que segunda expressão
+ * Maior que segunda expressão
+ * Menor ou igual a segunda expressão
+ * Maior ou igual a segunda expressão
+ * Teste se expressões são iguais
+ * Expressão de adição
+ * Expressão de sibtração
+ * Expressão de multiplicação
+ * Expressão de divisão
+ * Idenfificador
+ * Literal
+ */
 expression
-	: Identifier
+	: expression '<' expression
+	| expression '>' expression
+	| expression '<=' expression
+	| expression '>=' expression
+	| expression '==' expression
+	| expression '+' expression
+	| expression '-' expression
+	| expression '*' expression
+	| expression '/' expression
+	| Identifier
 	| literal
 	;
 
