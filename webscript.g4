@@ -42,7 +42,7 @@ statement
 	;
 
 ifStatement
-	: 'if' '(' expression ')' Space '{' statement '}'
+	: 'if' '(' expression ')' Space '{' elements? '}'
 	;
 
 iteration
@@ -58,7 +58,7 @@ continueStatement
 	;
 
 returnStatement
-	: 'return' Space expression ';'
+	: 'return' (Space expression)? ';'
 	;
 
 switchStatement
@@ -107,15 +107,15 @@ initialiser
  * Literal
  */
 expression
-	: expression '<' expression
-	| expression '>' expression
-	| expression '<=' expression
-	| expression '>=' expression
-	| expression '==' expression
-	| expression '+' expression
-	| expression '-' expression
-	| expression '*' expression
-	| expression '/' expression
+	: expression Space '<'  Space expression
+	| expression Space '>'  Space expression
+	| expression Space '<=' Space expression
+	| expression Space '>=' Space expression
+	| expression Space '==' Space expression
+	| expression Space '+'  Space expression
+	| expression Space '-'  Space expression
+	| expression Space '*'  Space expression
+	| expression Space '/'  Space expression
 	| Identifier
 	| literal
 	;
