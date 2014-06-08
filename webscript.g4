@@ -39,7 +39,7 @@ element
 	| functionDeclaration EOF
 	;
 
-/// Declaração de função
+/// Declaração de função.
 functionDeclaration
 	: 'function' Space Identifier '(' functionParameterList? ')' Space '{' INDENT functionBody DEDENT '}'
 	;
@@ -75,7 +75,7 @@ ifStatement
 /// Declaração dos comantos iteração.
 iteration
 	: While '(' expression ')' Space '{' elements? '}'
-	| Do elements While '(' expression ')' ';'
+	| Do Space '{' INDENT elements? DEDENT '}' Space While '(' expression ')' ';'
 	;
 
 breakStatement

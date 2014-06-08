@@ -15,3 +15,10 @@ var c;
 return;
 }
 
+while(a) {
+
+}
+
+do {
+    var a;
+} while(a);
