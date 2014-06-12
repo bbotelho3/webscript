@@ -151,12 +151,12 @@ ifStatement
 
 /// Declaração dos comantos iteração.
 iteration
-	: While '(' expression ')' Space '{' LineEnd elements? '}'
+	: While '(' expression ')' Space '{' INDENT elements? DEDENT '}'
 	| Do Space '{' INDENT elements? DEDENT '}' Space While '(' expression ')' ';'
 	;
 
 assignmentDeclaration
-	: Identifier Space '=' Space Identifier ';'
+	: Identifier Space '=' Space expression ';'
 	{
 		Symbol s = symTab.currentScope().resolve($Identifier.text);
 		if (s != null) {
@@ -253,10 +253,17 @@ expression
 		if (s != null) {
 			s.setUsed();
 		} else {
-			System.out.println("Warning: variable " + $Identifier.text + " used but not declared.");
+			System.out.println("Warning: VARIABLE " + $Identifier.text + " used but not declared.");
 		}	
 	}
+	| expression '.' Identifier
 	| literal
+	| arrayLiteral
+	| expression '[' expression ']'
+	;
+
+arrayLiteral
+	: '[' expression? ( ',' Space expression )* ']'
 	;
 
 literal
@@ -268,6 +275,7 @@ Decimal
 	: '0' '.' DecimalDigit*
 	| '.' DecimalDigit+
 	| [1-9] DecimalDigit*
+	| '0'
 	;
 
 fragment DecimalDigit
@@ -279,7 +287,7 @@ String
 	;
 
 fragment StringCharacter
-	: [A-Za-z0-9 ]
+	: ~["\\\r\n]
 	;
 
 /// Espaço em branco.
