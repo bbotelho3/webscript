@@ -10,17 +10,17 @@ function a(a,b,c) {
     var b;
 }
 
-if(a + b) {
+if (a + b) {
     var d;
     var e;
 }
 
 var a;
 
-while(a) {
-
+while (a) {
+    var x;
 }
 
 do {
     var a;
-} while(a);
+} while (a);

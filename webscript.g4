@@ -257,7 +257,7 @@ expression
 		if (s != null) {
 			s.setUsed();
 		} else {
-			System.out.println("Warning: VARIABLE " + $Identifier.text + " used but not declared.");
+			System.out.println("Warning: VARIABLE or FUNCTION " + $Identifier.text + " used but not declared.");
 		}	
 	}
 	| literal
