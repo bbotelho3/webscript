@@ -1,5 +1,0 @@
-dwddwdwqoijidoq;
-
-function(): {
-
-}

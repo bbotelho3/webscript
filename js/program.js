@@ -10,6 +10,6 @@ var b = "Four!!!";
 
 var e = a.val;
 
-if(a == 4) {
+if (a == 4) {
     return b;
 }
