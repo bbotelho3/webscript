@@ -11,10 +11,8 @@ function a(a,b,c) {
 }
 
 if(a + b) {
-var d;
-var e;
-
-return;
+    var d;
+    var e;
 }
 
 var a;

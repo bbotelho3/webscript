@@ -123,9 +123,6 @@ statement
 	| continueStatement
 	| returnStatement
 	| switchStatement
-	| throwStatement
-	| tryStatement
-	| debuggerStatement
 	| functionCallStatement
 	;
 
@@ -149,12 +146,12 @@ functionCall
 
 /// Declaração do if.
 ifStatement
-	: If '(' expression ')' Space '{' elements? '}'
+	: If '(' expression ')' Space '{' INDENT elements? DEDENT '}'
 	;
 
 /// Declaração dos comantos iteração.
 iteration
-	: While '(' expression ')' Space '{' elements? '}'
+	: While '(' expression ')' Space '{' LineEnd elements? '}'
 	| Do Space '{' INDENT elements? DEDENT '}' Space While '(' expression ')' ';'
 	;
 
@@ -171,11 +168,11 @@ assignmentDeclaration
 	;
 
 breakStatement
-	:
+	: Break ';'
 	;
 
 continueStatement
-	:
+	: Continue ';'
 	;
 
 returnStatement
@@ -183,19 +180,23 @@ returnStatement
 	;
 
 switchStatement
-	:
+	: Switch '(' expression ')' Space caseBlock
 	;
 
-throwStatement
-	:
+caseBlock
+	: '{' INDENT caseClauses? ( defaultClause caseClauses? )? DEDENT '}'
 	;
 
-tryStatement
-	:
+caseClauses
+	: caseClause+
 	;
 
-debuggerStatement
-	:
+caseClause
+	: Case Space expression ':' INDENT elements? DEDENT
+	;
+
+defaultClause
+	: Default ':' INDENT elements? DEDENT
 	;
 
 /// Linha vazia.
@@ -305,6 +306,11 @@ If			     : 'if';
 Var			     : 'var';
 Do			     : 'do';
 While			 : 'while';
+Break            : 'break';
+Continue         : 'continue';
+Switch           : 'switch';
+Case             : 'case';
+Default          : 'default';
 
 /// Identificadores.
 Identifier
