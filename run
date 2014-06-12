@@ -9,4 +9,4 @@ fi
 
 cd output
 
-$GRUN webscript program ../$1
+$GRUN webscript program $2 ../$1 

@@ -37,7 +37,7 @@ tokens { INDENT, DEDENT }
 	final SymbolTable symTab = new SymbolTable();
 
 	void printUnusedVariables(String scope) {
-		Iterator it = symTab.currentScope().symbolMap.entrySet().iterator();
+		Iterator it = symTab.getCurrentScope().symbolMap.entrySet().iterator();
 		
 		while (it.hasNext()){
    			Map.Entry<String, Symbol> entry = (Map.Entry<String, Symbol>)it.next();
@@ -77,7 +77,7 @@ functionDeclaration
 	}
 	'function' Space Identifier '(' functionParameterList? ')' Space '{' INDENT functionBody DEDENT '}'
 	{ 
-		symTab.currentScope().enclosingScope().define($Identifier.text, ValueType.FUNCTION);
+		symTab.getCurrentScope().enclosingScope().addSymbol($Identifier.text, ValueType.FUNCTION);
 
 	 	printUnusedVariables("function " + $Identifier.text);
 
@@ -90,7 +90,7 @@ functionParameterList
 	: ids+=Identifier ( ',' ids+=Identifier )*
 	{ 
 		for(Token t : $ids) {
-			symTab.currentScope().define(t.getText(), ValueType.PARAMETER); 
+			symTab.getCurrentScope().addSymbol(t.getText(), ValueType.PARAMETER); 
 		}
 	}
 	;
@@ -99,7 +99,7 @@ functionCallParameterList
 	: ids+=Identifier ( ',' ids+=Identifier )*
 	{ 
 		for(Token t : $ids) {
-			Symbol s = symTab.currentScope().resolve(t.getText());
+			Symbol s = symTab.getCurrentScope().getSymbolCurrentScope(t.getText());
 			if (s != null) {
 				s.setUsed();
 			} else {
@@ -122,7 +122,7 @@ statement
 	| breakStatement
 	| continueStatement
 	| returnStatement
-	| switchStatement
+	| switchStatement	
 	| functionCallStatement
 	;
 
@@ -134,7 +134,7 @@ functionCallStatement
 functionCall
 	: Identifier '(' functionCallParameterList? ')' ';'
 	{
-		Symbol s = symTab.currentScope().resolve($Identifier.text);
+		Symbol s = symTab.getCurrentScope().getSymbol($Identifier.text);
 		
 		if (s != null) {
 			s.setUsed();
@@ -146,25 +146,17 @@ functionCall
 
 /// Declaração do if.
 ifStatement
-	: If '(' expression ')' Space '{' INDENT elements? DEDENT '}'
+	: If Space '(' expression ')' Space '{' INDENT elements? DEDENT '}'
 	;
 
 /// Declaração dos comantos iteração.
 iteration
-	: While '(' expression ')' Space '{' INDENT elements? DEDENT '}'
-	| Do Space '{' INDENT elements? DEDENT '}' Space While '(' expression ')' ';'
+	: While Space '(' expression ')' Space '{' INDENT elements? DEDENT '}'
+	| Do Space '{' INDENT elements? DEDENT '}' Space While Space '(' expression ')' ';'
 	;
 
 assignmentDeclaration
-	: Identifier Space '=' Space expression ';'
-	{
-		Symbol s = symTab.currentScope().resolve($Identifier.text);
-		if (s != null) {
-			s.setUsed();
-		} else {
-			System.out.println("Warning: VARIABLE " + $Identifier.text + " used but not declared.");
-		}	
-	}
+	: expression Space '=' Space expression ';'
 	;
 
 breakStatement
@@ -208,19 +200,27 @@ empty
 variableDeclaration
 	: Var Space Identifier initializer? ';' 
 	{	
-		Symbol s = symTab.currentScope().resolve($Identifier.text);
+		Symbol s = symTab.getCurrentScope().getSymbolCurrentScope($Identifier.text);
 		
 		if (s != null) {
 			System.out.println("Warning: redefinition of VARIABLE " + $Identifier.text + ".");
 		}
 
-		symTab.currentScope().define($Identifier.text, ValueType.VARIABLE);
+		symTab.getCurrentScope().addSymbol($Identifier.text, ValueType.VARIABLE);
 	}
 	;
 
 /// Inicialização de variável.
 initializer
 	: Space '=' Space expression
+	;
+
+arguments
+	: '(' argumentList? ')'
+	;
+
+argumentList
+	: expression ( ',' expression )*
 	;
 
 /* Declaração de uma expressão.
@@ -247,19 +247,21 @@ expression
 	| expression Space '-'  Space expression
 	| expression Space '*'  Space expression
 	| expression Space '/'  Space expression
+	| expression '[' expression ']'
+	| New Space expression arguments?
+	| expression'(' expression? ')'
+	| expression '.' expression
 	| Identifier 
 	{
-		Symbol s = symTab.currentScope().resolve($Identifier.text);
+		Symbol s = symTab.getCurrentScope().getSymbolCurrentScope($Identifier.text);
 		if (s != null) {
 			s.setUsed();
 		} else {
 			System.out.println("Warning: VARIABLE " + $Identifier.text + " used but not declared.");
 		}	
 	}
-	| expression '.' Identifier
 	| literal
 	| arrayLiteral
-	| expression '[' expression ']'
 	;
 
 arrayLiteral
@@ -319,6 +321,7 @@ Continue         : 'continue';
 Switch           : 'switch';
 Case             : 'case';
 Default          : 'default';
+New              : 'new';
 
 /// Identificadores.
 Identifier

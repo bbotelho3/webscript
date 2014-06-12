@@ -1,11 +1,11 @@
-function a(a,b,c) {
-    var e;
-}
+var y;
 
 function b() {
-    var f;
+    var y = 1;
+    var x = y;
+    if (x) {
+        return y;
+    }
 }
 
-b = a();
-
-c = a(d,e,f);
+b(y);
