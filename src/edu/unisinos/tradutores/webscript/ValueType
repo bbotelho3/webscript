@@ -1,0 +1,7 @@
+package edu.unisinos.tradutores.webscript;
+
+public enum ValueType {
+    PARAMETER,
+    VARIABLE,
+    FUNCTION;
+}
