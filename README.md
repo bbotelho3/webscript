@@ -3,7 +3,7 @@ webscript
 
 An ANTLR definition for a stricter subset of JavaScript.
 
-The objective is to have a language that is cleaner and less error prone, using software engineering best practices.
+The objective is to have a language that is cleaner and less error-prone, using software engineering best practices.
 
 Installation
 ------------
